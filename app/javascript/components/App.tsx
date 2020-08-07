@@ -1,8 +1,11 @@
 import React from "react";
+import { Routes } from "./Routes/Routex";
 
 class App extends React.Component {
   public render (): JSX.Element {
-  return <h1>Mama</h1>;
+    return (
+     <Routes />
+    );
   }
 }
 
