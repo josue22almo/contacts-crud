@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes } from "./Routes/Routex";
+import { Routes } from "./Routes/Routes";
 
 class App extends React.Component {
   public render (): JSX.Element {
