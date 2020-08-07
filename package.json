@@ -20,6 +20,11 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@types/webpack-env": "^1.15.2",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "eslint": "^7.6.0",
+    "eslint-config-preact": "^1.1.1",
     "webpack-dev-server": "^3.11.0"
   }
 }
