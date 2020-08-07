@@ -1,12 +1,8 @@
 import React from "react";
 
-interface Props {
-  greeting: string;
-}
-
-class App extends React.Component<Props> {
+class App extends React.Component {
   public render (): JSX.Element {
-  return <h1>Hello, world!: {this.props.greeting}</h1>;
+  return <h1>Mama</h1>;
   }
 }
 
