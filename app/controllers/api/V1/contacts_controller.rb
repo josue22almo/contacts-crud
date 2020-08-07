@@ -1,9 +1,11 @@
 module Api
   module V1
     class ContactsController < ApplicationController
+      protect_from_forgery with: :null_session
+        
       def index
-        if request.query_parameters[:email]
-          contact = Contact.find_by(email: request.query_parameters[:email])
+        if request.query_parameters
+          contact = Contact.where(request.query_parameters)
           render json: ContactSerializer.new(contact).serialized_json
         else
           contacts = Contact.all
