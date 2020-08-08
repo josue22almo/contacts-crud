@@ -1,41 +1,28 @@
-import React from "react";
-import Modal from '@material-ui/core/Modal';
+import React, { ChangeEvent } from "react";
 import { ContactForm } from "../ContactForm/ContactForm";
-import { makeStyles } from '@material-ui/core/styles';
+import { BaseModal } from "../BaseModal/BaseModal";
+import { IContractAttributes } from "../../lib/models/IContractAttributes";
 
 interface IProps {
+  contactAttributes: IContractAttributes;
   handleClose: () => void;
+  onSubmit: () => Promise<void>;
+  onFirstNameFieldChange: (event: ChangeEvent) => void;
+  onLastNameFieldChange: (event: ChangeEvent) => void;
+  onEmailNameFieldChange: (event: ChangeEvent) => void;
+  onPhoneNumberFieldChange: (event: ChangeEvent) => void;
   isVisible: boolean;
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    display: "flex",
-    position: 'absolute',
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    top: 50,
-    left: 50,
-    alignItems: "center",
-  },
-}));
-
-export function ContactModal(props: IProps): JSX.Element {
-  const classes = useStyles();
-
-  return (
-    <Modal
-      open={props.isVisible}
-      onClose={props.handleClose}
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
-      className={classes.paper}
-    >
-      <div className={classes.paper}>
-        <ContactForm />
-      </div>
-    </Modal>
-  );
+export class ContactModal extends React.Component<IProps> {
+  public render(): JSX.Element {
+    return (
+      <BaseModal {...this.props}>
+        <ContactForm 
+          {...this.props}
+          onCancel={this.props.handleClose}
+        />
+      </BaseModal>
+    );
+  }
 }

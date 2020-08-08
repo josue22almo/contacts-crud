@@ -1,6 +1,9 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { observable, action } from "mobx";
 import { GridApi, GridReadyEvent } from "ag-grid-community";
+import { IContractAttributes } from "../../../lib/models/IContractAttributes";
+
+type OperationType = "create" | "update";
 
 export class ContactUIStore {
   private static StoreContext = React.createContext({} as ContactUIStore);
@@ -18,6 +21,8 @@ export class ContactUIStore {
   // };
 
   public gridApi: GridApi;
+
+  public operation: OperationType;
 
   public readonly columnDefs = [
     {
@@ -50,8 +55,18 @@ export class ContactUIStore {
   @observable
   public isModalVisible: boolean;
 
+  @observable
+  public contactAttributes: IContractAttributes;
+
   constructor() {
     this.isModalVisible = false;
+    this.contactAttributes = {} as IContractAttributes;
+  }
+
+  @action
+  public setAttribute(key: string, event: ChangeEvent): void {
+    // this.contactAttributes[key] = value;
+    alert(event);
   }
 
   @action
@@ -66,5 +81,9 @@ export class ContactUIStore {
 
   public setGridAPI(event: GridReadyEvent): void {
     this.gridApi = event.api
+  }
+
+  public setOperation(operation: OperationType): void {
+    this.operation = operation;
   }
 }

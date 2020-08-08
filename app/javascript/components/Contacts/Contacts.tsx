@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-no-bind */
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { observer } from "mobx-react";
 
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+
+import { Button } from "@material-ui/core";
 
 import { ContactStore } from "../../lib/stores/ContactsStore";
 import { IContact } from "../../lib/models/IContact";
@@ -18,7 +20,7 @@ interface IProps {
 @(ContactStore.withStore as any)
 @observer
 export class Contacts extends React.Component<IProps> {
-  private contactUIStore: ContactUIStore;
+  private contactUIStore: ContactUIStore;  
 
   constructor(props: IProps) {
     super(props);
@@ -39,9 +41,8 @@ export class Contacts extends React.Component<IProps> {
           height: '250px',
           width: '600px' }}
         >
-          <button onClick={this.createContact.bind(this)}>Add new contact</button>
-          <button onClick={this.deleteContacts.bind(this)}>Delete selected contacts</button>
-          <button onClick={this.updateContact.bind(this)}>Update contact</button>
+          {this.renderButtons()}
+
           <AgGridReact
             onGridReady={this.contactUIStore.setGridAPI.bind(this.contactUIStore)}
             columnDefs={this.contactUIStore.columnDefs}
@@ -50,28 +51,72 @@ export class Contacts extends React.Component<IProps> {
 
           <ContactModal 
             isVisible={this.contactUIStore.isModalVisible} 
+            onSubmit={this.handleModelSubmit.bind(this)}
+            contactAttributes={this.contactUIStore.contactAttributes}
+            onFirstNameFieldChange={(event: ChangeEvent) => this.contactUIStore.setAttribute("firstName", event)}
+            onLastNameFieldChange={(event: ChangeEvent) => this.contactUIStore.setAttribute("lastName", event)}
+            onEmailNameFieldChange={(event: ChangeEvent) => this.contactUIStore.setAttribute("email", event)}
+            onPhoneNumberFieldChange={(event: ChangeEvent) => this.contactUIStore.setAttribute("phoneNumber", event)}
             handleClose={this.contactUIStore.closeModal.bind(this.contactUIStore)} />
-            {/* <SimpleModal /> */}
         </div>
       </ContactUIStore.StoreProvider>
 
     );
   }
 
-  private createContact() {
+  private renderButtons() {
+    return (
+      <div>
+        <Button 
+          variant="contained" 
+          onClick={this.openModelToCreateAContact.bind(this)}
+          color="primary">
+          Create new contact
+        </Button>
+
+        <Button 
+          variant="contained" 
+          onClick={this.deleteContacts.bind(this)}
+          color="secondary">
+          Delete selected contacts
+        </Button>
+        
+        <Button 
+          variant="contained" 
+          onClick={this.openModelToUpdateContact.bind(this.openModelToUpdateContact)}
+          color="default">
+          Update contact
+        </Button>
+      </div>
+    )
+  }
+
+  private async handleModelSubmit() {
+    const { store } = this.props;
+    alert("submit")
+    if (this.contactUIStore.operation === "create") {
+      await store.createContact(this.contactUIStore.contactAttributes)
+    }
+  }
+
+  private openModelToCreateAContact() {
+    this.contactUIStore.setOperation("create");
     this.contactUIStore.showModal();
   }
 
-  private deleteContacts() {
+  private openModelToUpdateContact() {
+    this.contactUIStore.setOperation("create");
+    this.contactUIStore.showModal();
+  }
+
+  private async deleteContacts() {
     const { store } = this.props;
     
     const selectedContacts = this.getSelectedContacts();
     
-    return store.deleteContacts(selectedContacts);
-  }
+    await store.deleteContacts(selectedContacts);
 
-  private updateContact() {
-    this.contactUIStore.showModal();
+    return store.fetchContacts(); 
   }
 
   private getSelectedContacts(): IContact[] {

@@ -16,6 +16,11 @@ export class ContactService {
     return requestResponse.data;
   }
 
+  public async createContact(contactAttributes: IContractAttributes): Promise<IContact> {
+    const requestResponse = await this.requester.post<IContact>("/", contactAttributes);
+    return requestResponse.data;
+  }
+
   public async deleteContact(id: string): Promise<void> {
     await this.requester.delete<IContact[]>(`/${id}`);
   }

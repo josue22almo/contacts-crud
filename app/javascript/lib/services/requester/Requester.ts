@@ -19,6 +19,16 @@ export class Requester {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  public post<T>(url: string, data: object): Promise<IRequesterResponse<T>> {
+    return this.call({
+      ...this.config,
+      url,
+      method: HTTP_METHOD.POST,
+      data
+    });
+  }
+
   public delete<T>(url: string): Promise<IRequesterResponse<T>> {
     return this.call({
       ...this.config,
