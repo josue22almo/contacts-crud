@@ -54,12 +54,7 @@ export class ContactUIStore {
 
   constructor() {
     this.isModalVisible = false;
-    this.contactAttributes = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-    } as IContractAttributes;
+    this.resetContactAttributes();
   }
 
   @action
@@ -70,14 +65,24 @@ export class ContactUIStore {
   @computed
   public get isSubmitButtonDisable(): boolean {
     return this.contactAttributes.firstName === "" 
-           && this.contactAttributes.lastName === ""
-           && this.contactAttributes.email === ""
-           && this.contactAttributes.phoneNumber === "";
+           || this.contactAttributes.lastName === ""
+           || this.contactAttributes.email === ""
+           || this.contactAttributes.phoneNumber === "";
   }
 
   @action
   public closeModal(): void {
     this.isModalVisible = false;
+    this.resetContactAttributes();
+  }
+  
+  private resetContactAttributes() {
+    this.contactAttributes = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+    };
   }
 
   @action
