@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button } from "@material-ui/core";
 import { IContractAttributes } from "../../lib/models/IContractAttributes";
 import { OperationType } from "../Contacts/ui-store/OperationType";
-import { observer } from "mobx-react";
 
 interface IProps {
   contactAttributes: IContractAttributes;
@@ -20,7 +19,7 @@ interface IProps {
   submitAction: OperationType;
 }
 
-export const ContactForm = observer((props: IProps): JSX.Element => {
+export const ContactForm = (props: IProps): JSX.Element => {
   const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
@@ -90,4 +89,4 @@ export const ContactForm = observer((props: IProps): JSX.Element => {
       </div>
     </form>
   );
-})
+}
