@@ -22,7 +22,6 @@ export class ContactStore {
   private contactService: ContactService = new ContactService();
   @observable public contacts: IContact[] = [];
 
-
   @action
   public async fetchContacts(): Promise<void> {
     this.contacts = await this.contactService.getContacts();
