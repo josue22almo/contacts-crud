@@ -19,8 +19,16 @@ export class Requester {
     });
   }
 
-  private call<T>(requestConfig: AxiosRequestConfig): Promise<T> {
-    return axios.request(requestConfig);
+  public delete<T>(url: string): Promise<IRequesterResponse<T>> {
+    return this.call({
+      ...this.config,
+      url,
+      method: HTTP_METHOD.DELETE,
+    });
+  }
+
+  private async call<T>(requestConfig: AxiosRequestConfig): Promise<T> {
+    return (await axios.request(requestConfig)).data;
   }
 }
 

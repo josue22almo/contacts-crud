@@ -8,7 +8,7 @@ interface IProps {
 
 @(ContactStore.withStore as any)
 @observer
-export class Contact extends React.Component<IProps> {
+export class ContactForm extends React.Component<IProps> {
   public render (): JSX.Element {
     return (
       <div className="App">

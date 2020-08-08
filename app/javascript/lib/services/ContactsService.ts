@@ -1,5 +1,6 @@
 import { Requester } from "./requester/Requester";
 import { IContact } from "../models/IContact";
+import { IContractAttributes } from "../models/IContractAttributes";
 
 export class ContactService {
   private readonly requester: Requester;
@@ -10,9 +11,13 @@ export class ContactService {
     });
   }
 
-  public async getContacts(query?: Partial<IContact>): Promise<IContact[]> {
+  public async getContacts(query?: Partial<IContractAttributes>): Promise<IContact[]> {
     const requestResponse = await this.requester.get<IContact[]>("/", query);
     return requestResponse.data;
+  }
+
+  public async deleteContact(id: string): Promise<void> {
+    await this.requester.delete<IContact[]>(`/${id}`);
   }
 }
 

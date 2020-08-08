@@ -2,13 +2,6 @@ import React from "react";
 import { action, observable } from "mobx";
 import { IContact } from "../models/IContact";
 import { ContactService } from "../services/ContactsService";
- 
-interface IUser {
-  userId: number;
-  name: string;
-  website: string;
-  email: string;
-}
 
 export class ContactStore {
   private static StoreContext = React.createContext({} as ContactStore);
@@ -32,5 +25,13 @@ export class ContactStore {
   @action
   public async fetchContacts(): Promise<void> {
     this.contacts = await this.contactService.getContacts();
+  }
+
+  @action
+  public async deleteContacts(contacts: IContact[]): Promise<void> {
+    for(const contact of contacts) { 
+      await this.contactService.deleteContact(contact.id);
+    }
+    return this.fetchContacts();
   }
 }
