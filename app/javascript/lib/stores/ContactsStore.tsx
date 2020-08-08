@@ -37,4 +37,8 @@ export class ContactStore {
   public createContact(attributes: IContractAttributes): Promise<IContact> {
     return this.contactService.createContact(attributes);
   }
+
+  public updateContact(id: string, attributes: IContractAttributes): Promise<IContact> {
+    return this.contactService.updateContact(id, attributes);
+  }
 }

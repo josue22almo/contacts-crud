@@ -52,6 +52,7 @@ export class Contacts extends React.Component<IProps> {
           <ContactModal 
             isVisible={this.contactUIStore.isModalVisible} 
             onSubmit={this.handleModelSubmit.bind(this)}
+            submitAction={this.contactUIStore.operation}
             isSubmitButtonDisable={this.contactUIStore.isSubmitButtonDisable}
             contactAttributes={this.contactUIStore.contactAttributes}
             onFirstNameFieldChange={(event: ChangeEvent) => {
@@ -103,6 +104,8 @@ export class Contacts extends React.Component<IProps> {
     const { store } = this.props;
     if (this.contactUIStore.operation === "create") {
       await store.createContact(this.contactUIStore.contactAttributes)
+    } else {
+      await store.updateContact(this.contactUIStore.id, this.contactUIStore.contactAttributes)
     }
     this.contactUIStore.closeModal();
     await store.fetchContacts();
@@ -114,8 +117,20 @@ export class Contacts extends React.Component<IProps> {
   }
 
   private openModelToUpdateContact() {
-    this.contactUIStore.setOperation("update");
-    this.contactUIStore.showModal();
+    const selectedContacts = this.getSelectedContacts();
+
+    if(selectedContacts.length === 0) {
+      alert("Chose a contact to update");
+    } else if(selectedContacts.length === 1) {
+      const selectedContact: IContact = selectedContacts[0];
+      this.contactUIStore.setOperation("update");
+      this.contactUIStore.setContact({...selectedContact});
+      this.contactUIStore.showModal();
+    } else {
+      alert("Can not update more than 1 contact. Please chose only one.");
+    }
+
+
   }
 
   private async deleteContacts() {

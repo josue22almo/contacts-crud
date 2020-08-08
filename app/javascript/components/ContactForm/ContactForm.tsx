@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from "@material-ui/core";
 import { IContractAttributes } from "../../lib/models/IContractAttributes";
+import { OperationType } from "../Contacts/ui-store/OperationType";
 
 interface IProps {
   contactAttributes: IContractAttributes;
@@ -15,6 +16,7 @@ interface IProps {
   onEmailNameFieldChange: (event: ChangeEvent) => void;
   onPhoneNumberFieldChange: (event: ChangeEvent) => void;
   isSubmitButtonDisable: boolean;
+  submitAction: OperationType;
 }
 
 export const ContactForm = (props: IProps): JSX.Element => {
@@ -26,6 +28,12 @@ export const ContactForm = (props: IProps): JSX.Element => {
       },
     },
   }));
+
+  let submitText = "Create contact";
+
+  if(props.submitAction === "update") {
+    submitText = "Update contact"
+  }
   
   const classes = useStyles();
 
@@ -70,7 +78,7 @@ export const ContactForm = (props: IProps): JSX.Element => {
           onClick={props.onSubmit}
           disabled={props.isSubmitButtonDisable}
           color="primary">
-          Create contact
+          {submitText}
         </Button>
         <Button 
           variant="contained" 

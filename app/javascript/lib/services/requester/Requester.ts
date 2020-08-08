@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import axios, { AxiosRequestConfig } from "axios";
 import { HTTP_METHOD } from "./HTTP_METHOD";
 import { IRequesterConfig } from "./IRequesterConfig";
@@ -19,12 +20,20 @@ export class Requester {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   public post<T>(url: string, data: object): Promise<IRequesterResponse<T>> {
     return this.call({
       ...this.config,
       url,
       method: HTTP_METHOD.POST,
+      data
+    });
+  }
+
+  public patch<T>(url: string, data: object): Promise<IRequesterResponse<T>> {
+    return this.call({
+      ...this.config,
+      url,
+      method: HTTP_METHOD.PATCH,
       data
     });
   }

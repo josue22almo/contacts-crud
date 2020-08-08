@@ -2,8 +2,8 @@ import React from "react";
 import { observable, action, computed } from "mobx";
 import { GridApi, GridReadyEvent } from "ag-grid-community";
 import { IContractAttributes } from "../../../lib/models/IContractAttributes";
-
-type OperationType = "create" | "update";
+import { OperationType } from "./OperationType";
+import { IContact } from "../../../lib/models/IContact";
 
 export class ContactUIStore {
   private static StoreContext = React.createContext({} as ContactUIStore);
@@ -51,6 +51,7 @@ export class ContactUIStore {
 
   @observable
   public contactAttributes: IContractAttributes;
+  public id: string;
 
   constructor() {
     this.isModalVisible = false;
@@ -75,8 +76,15 @@ export class ContactUIStore {
     this.isModalVisible = false;
     this.resetContactAttributes();
   }
+
+  @action
+  public  setContact(contact: IContact): void {
+    this.id = contact.id;
+    this.contactAttributes = contact.attributes;
+  }
   
   private resetContactAttributes() {
+    this.id = "";
     this.contactAttributes = {
       firstName: "",
       lastName: "",

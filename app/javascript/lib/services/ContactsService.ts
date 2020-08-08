@@ -21,6 +21,11 @@ export class ContactService {
     return requestResponse.data;
   }
 
+  public async updateContact(id: string, contactAttributes: IContractAttributes): Promise<IContact> {
+    const requestResponse = await this.requester.patch<IContact>(`/${id}`, contactAttributes);
+    return requestResponse.data;
+  }
+
   public async deleteContact(id: string): Promise<void> {
     await this.requester.delete<IContact[]>(`/${id}`);
   }
