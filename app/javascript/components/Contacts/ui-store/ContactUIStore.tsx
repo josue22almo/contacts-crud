@@ -14,12 +14,6 @@ export class ContactUIStore {
     );
   }
 
-  // public static useStore = (): ContactUIStore => React.useContext(ContactUIStore.StoreContext);
-
-  // public static withStore = (Component) => (props) => {
-  //   return <Component {...props} store={ContactUIStore.useStore()} />;
-  // };
-
   public gridApi: GridApi;
 
   public operation: OperationType;
