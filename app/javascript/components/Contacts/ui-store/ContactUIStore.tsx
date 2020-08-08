@@ -1,5 +1,5 @@
-import React, { ChangeEvent } from "react";
-import { observable, action } from "mobx";
+import React from "react";
+import { observable, action, computed } from "mobx";
 import { GridApi, GridReadyEvent } from "ag-grid-community";
 import { IContractAttributes } from "../../../lib/models/IContractAttributes";
 
@@ -60,13 +60,25 @@ export class ContactUIStore {
 
   constructor() {
     this.isModalVisible = false;
-    this.contactAttributes = {} as IContractAttributes;
+    this.contactAttributes = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+    } as IContractAttributes;
   }
 
   @action
-  public setAttribute(key: string, event: ChangeEvent): void {
-    // this.contactAttributes[key] = value;
-    alert(event);
+  public setAttribute(key: string, value: string): void {
+    this.contactAttributes[key] = value;
+  }
+
+  @computed
+  public get isSubmitButtonDisable(): boolean {
+    return this.contactAttributes.firstName === "" 
+           && this.contactAttributes.lastName === ""
+           && this.contactAttributes.email === ""
+           && this.contactAttributes.phoneNumber === "";
   }
 
   @action

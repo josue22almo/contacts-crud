@@ -14,6 +14,7 @@ interface IProps {
   onLastNameFieldChange: (event: ChangeEvent) => void;
   onEmailNameFieldChange: (event: ChangeEvent) => void;
   onPhoneNumberFieldChange: (event: ChangeEvent) => void;
+  isSubmitButtonDisable: boolean;
 }
 
 export const ContactForm = (props: IProps): JSX.Element => {
@@ -36,6 +37,7 @@ export const ContactForm = (props: IProps): JSX.Element => {
       <div>
         <TextField 
           id="standard-required"
+          error={props.contactAttributes.firstName === ""}
           required
           label="First name"
           value={props.contactAttributes.firstName}
@@ -43,26 +45,30 @@ export const ContactForm = (props: IProps): JSX.Element => {
         <TextField 
           id="standard-required"
           required
+          error={props.contactAttributes.lastName === ""}
           label="Last name"
-          value={props.contactAttributes.firstName}
+          value={props.contactAttributes.lastName}
           onChange={props.onLastNameFieldChange} />
         <TextField 
           id="standard-required"
           required
           label="email" 
-          value={props.contactAttributes.firstName}
-        onChange={props.onEmailNameFieldChange} />
+          error={props.contactAttributes.email === ""}
+          value={props.contactAttributes.email}
+          onChange={props.onEmailNameFieldChange} />
         <TextField 
           id="standard-required"
           required
           label="Phone number"
-          value={props.contactAttributes.firstName}
+          error={props.contactAttributes.phoneNumber === ""}
+          value={props.contactAttributes.phoneNumber}
           onChange={props.onPhoneNumberFieldChange} />
       </div>
       <div>
         <Button 
           variant="contained" 
           onClick={props.onSubmit}
+          disabled={props.isSubmitButtonDisable}
           color="primary">
           Create contact
         </Button>

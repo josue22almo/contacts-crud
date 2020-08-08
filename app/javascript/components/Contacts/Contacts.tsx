@@ -52,15 +52,23 @@ export class Contacts extends React.Component<IProps> {
           <ContactModal 
             isVisible={this.contactUIStore.isModalVisible} 
             onSubmit={this.handleModelSubmit.bind(this)}
+            isSubmitButtonDisable={this.contactUIStore.isSubmitButtonDisable}
             contactAttributes={this.contactUIStore.contactAttributes}
-            onFirstNameFieldChange={(event: ChangeEvent) => this.contactUIStore.setAttribute("firstName", event)}
-            onLastNameFieldChange={(event: ChangeEvent) => this.contactUIStore.setAttribute("lastName", event)}
-            onEmailNameFieldChange={(event: ChangeEvent) => this.contactUIStore.setAttribute("email", event)}
-            onPhoneNumberFieldChange={(event: ChangeEvent) => this.contactUIStore.setAttribute("phoneNumber", event)}
+            onFirstNameFieldChange={(event: ChangeEvent) => {
+              this.contactUIStore.setAttribute("firstName", (event.target as any).value)
+            }}
+            onLastNameFieldChange={(event: ChangeEvent) => 
+              this.contactUIStore.setAttribute("lastName", (event.target as any).value)
+            }
+            onEmailNameFieldChange={(event: ChangeEvent) => 
+              this.contactUIStore.setAttribute("email", (event.target as any).value)
+            }
+            onPhoneNumberFieldChange={(event: ChangeEvent) => 
+              this.contactUIStore.setAttribute("phoneNumber", (event.target as any).value)
+            }
             handleClose={this.contactUIStore.closeModal.bind(this.contactUIStore)} />
         </div>
       </ContactUIStore.StoreProvider>
-
     );
   }
 
@@ -83,7 +91,7 @@ export class Contacts extends React.Component<IProps> {
         
         <Button 
           variant="contained" 
-          onClick={this.openModelToUpdateContact.bind(this.openModelToUpdateContact)}
+          onClick={this.openModelToUpdateContact.bind(this)}
           color="default">
           Update contact
         </Button>
@@ -93,10 +101,11 @@ export class Contacts extends React.Component<IProps> {
 
   private async handleModelSubmit() {
     const { store } = this.props;
-    alert("submit")
     if (this.contactUIStore.operation === "create") {
       await store.createContact(this.contactUIStore.contactAttributes)
     }
+    this.contactUIStore.closeModal();
+    await store.fetchContacts();
   }
 
   private openModelToCreateAContact() {
@@ -105,7 +114,7 @@ export class Contacts extends React.Component<IProps> {
   }
 
   private openModelToUpdateContact() {
-    this.contactUIStore.setOperation("create");
+    this.contactUIStore.setOperation("update");
     this.contactUIStore.showModal();
   }
 

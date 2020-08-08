@@ -12,6 +12,7 @@ interface IProps {
   onEmailNameFieldChange: (event: ChangeEvent) => void;
   onPhoneNumberFieldChange: (event: ChangeEvent) => void;
   isVisible: boolean;
+  isSubmitButtonDisable: boolean;
 }
 
 export class ContactModal extends React.Component<IProps> {
