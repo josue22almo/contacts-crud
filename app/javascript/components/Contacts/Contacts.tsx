@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React from "react";
 import { observer } from "mobx-react";
 
@@ -6,8 +7,9 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 
 import { ContactStore } from "../../lib/stores/ContactsStore";
-import { GridApi } from "ag-grid-community";
 import { IContact } from "../../lib/models/IContact";
+import { ContactModal } from "../ContactModal/ContactModal";
+import { ContactUIStore } from "./ui-store/ContactUIStore";
 
 interface IProps {
   store: ContactStore;
@@ -16,35 +18,12 @@ interface IProps {
 @(ContactStore.withStore as any)
 @observer
 export class Contacts extends React.Component<IProps> {
-  private readonly columnDefs = [
-    {
-      headerName: "Firs name", 
-      field: "attributes.firstName", 
-      sortable: true, 
-      filter: true,
-      checkboxSelection: true
-    },
-    {
-      headerName: "Last name", 
-      field: "attributes.lastName", 
-      sortable: true, 
-      filter: true
-    },
-    {
-      headerName: "Email",
-      field: "attributes.email", 
-      sortable: true, 
-      filter: true
-    },
-    {
-      headerName: "Phone number",
-      field: "attributes.phoneNumber", 
-      sortable: true, 
-      filter: true
-    },
-  ]
+  private contactUIStore: ContactUIStore;
 
-  private gridApi: GridApi;
+  constructor(props: IProps) {
+    super(props);
+    this.contactUIStore = new ContactUIStore();
+  }
 
   public async componentDidMount(): Promise<void> {
     await this.props.store.fetchContacts();
@@ -53,28 +32,50 @@ export class Contacts extends React.Component<IProps> {
   public render (): JSX.Element {
     const { store } = this.props;
     return (
-      <div
-        className="ag-theme-alpine-dark"
-        style={{
-        height: '250px',
-        width: '600px' }}
-      >
-        <button onClick={this.deleteItems.bind(this)}>Delete</button>
-        <AgGridReact
-          onGridReady={ params => this.gridApi = params.api }
-          columnDefs={this.columnDefs}
-          rowData={store.contacts}
-          rowSelection="multiple" 
-        />
-      </div>
+      <ContactUIStore.StoreProvider store={this.contactUIStore}>
+        <div
+          className="ag-theme-alpine-dark"
+          style={{
+          height: '250px',
+          width: '600px' }}
+        >
+          <button onClick={this.createContact.bind(this)}>Add new contact</button>
+          <button onClick={this.deleteContacts.bind(this)}>Delete selected contacts</button>
+          <button onClick={this.updateContact.bind(this)}>Update contact</button>
+          <AgGridReact
+            onGridReady={this.contactUIStore.setGridAPI.bind(this.contactUIStore)}
+            columnDefs={this.contactUIStore.columnDefs}
+            rowData={store.contacts}
+            rowSelection="multiple" />
+
+          <ContactModal 
+            isVisible={this.contactUIStore.isModalVisible} 
+            handleClose={this.contactUIStore.closeModal.bind(this.contactUIStore)} />
+            {/* <SimpleModal /> */}
+        </div>
+      </ContactUIStore.StoreProvider>
+
     );
   }
 
-  private deleteItems = async () => {
+  private createContact() {
+    this.contactUIStore.showModal();
+  }
+
+  private deleteContacts() {
     const { store } = this.props;
-    const selectedNodes = this.gridApi.getSelectedNodes()
-    const selectedContacts: IContact[] = selectedNodes.map( node => node.data )
+    
+    const selectedContacts = this.getSelectedContacts();
     
     return store.deleteContacts(selectedContacts);
+  }
+
+  private updateContact() {
+    this.contactUIStore.showModal();
+  }
+
+  private getSelectedContacts(): IContact[] {
+    const selectedNodes = this.contactUIStore.gridApi.getSelectedNodes()
+    return selectedNodes.map( node => node.data );
   }
 }
