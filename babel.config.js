@@ -19,6 +19,7 @@ module.exports = function(api) {
     presets: [
       isTestEnv && [
         '@babel/preset-env',
+        '@babel/preset-typescript',
         {
           targets: {
             node: 'current'
