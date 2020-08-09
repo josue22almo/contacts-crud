@@ -35,3 +35,4 @@ vendor/
 yarn-debug.log*
 .yarn-integrity
 coverage/
+tmp/
