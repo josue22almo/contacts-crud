@@ -21,8 +21,11 @@ module Api
 
       def create
         contact = Contact.new(contact_params)
+        mailExist = contact.mailExist
 
-        if contact.save
+        if mailExist
+          render json: { error: "Mail already registered" }, status: 403
+        elsif contact.save
           render json: ContactSerializer.new(contact).serialized_json
         else
           render json: { error: contat.errors.message }, status: 422

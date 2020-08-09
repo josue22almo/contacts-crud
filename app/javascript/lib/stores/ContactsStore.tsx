@@ -1,7 +1,7 @@
 import React from "react";
 import { action, observable } from "mobx";
 import { IContact } from "../models/IContact";
-import { ContactService } from "../services/ContactsService";
+import { ContactService } from "../services/ContactService/ContactsService";
 import { IContractAttributes } from "../models/IContractAttributes";
 
 export class ContactStore {
@@ -24,7 +24,9 @@ export class ContactStore {
 
   @action
   public async fetchContacts(): Promise<void> {
-    this.contacts = await this.contactService.getContacts();
+    const contacts = await this.contactService.retrieveContacts();
+    this.contacts = contacts;
+    console.log(this.contacts);
   }
 
   public async deleteContacts(contacts: IContact[]): Promise<void> {
