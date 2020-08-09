@@ -7,6 +7,6 @@ export class SucceedResponseHandler extends ResponseHandler {
   }
 
   protected resolveRequest<T>(requestResponse: IRequestResponse<T>): T {
-    return requestResponse.data;
+    return requestResponse.data.data;
   }
 }

@@ -1,4 +1,6 @@
 export interface IRequestResponse<T> {
   status: number;
-  data: T;
+  data: {
+    data: T
+  };
 }

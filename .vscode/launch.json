@@ -12,26 +12,19 @@
       "program": "${workspaceRoot}/bin/rails",
       "pathToRDebugIDE": "~/.asdf/shims/rdebug-ide",
       "showDebuggerOutput": true,
-      "args": ["server"]
+      "args": [
+        "server"
+      ]
     },
     {
       "name": "Launch Chrome against localhost",
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
+      "sourceMaps": true,
+      "trace": true,
+      "userDataDir": "${workspaceRoot}/.vscode/chrome",
       "webRoot": "${workspaceFolder}"
-    },
-    {
-      "name": "Debug Jest Tests",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": [
-        "--inspect-brk",
-        "${workspaceRoot}/node_modules/.bin/jest",
-        "--runInBand"
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
     }
   ]
 }

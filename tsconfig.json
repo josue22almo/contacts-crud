@@ -9,14 +9,25 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "dist",
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react"
   },
-  "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
-  "include": ["test/**/*.test.ts", "app/**/*.ts"],
+  "exclude": [
+    "**/*.spec.ts",
+    "node_modules",
+    "vendor",
+    "public"
+  ],
+  "include": [
+    "test/**/*.test.ts*",
+    "app/javascript/**/**/*.ts*"
+  ],
   "compileOnSave": false
 }
