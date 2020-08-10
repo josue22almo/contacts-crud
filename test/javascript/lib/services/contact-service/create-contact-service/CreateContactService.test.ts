@@ -10,18 +10,24 @@ describe("Create contact service", () => {
   };
   const createContactService = new CreateContactService(contactAttributes);
 
-  it("should POST TO / to create a new contact", async () => {
-    const nockedRequest = nock("http://localhost:300/api/v1")
-      .post("/contact")
-      .reply(200);
+  let nockedRequest: nock.Scope;
+-
+  beforeEach(() => {
+    nockedRequest = nock("http://localhost:3000/api/v1")
+    .post("/contacts")
+    .reply(200, {
+      data: "response"
+    });
+  })
 
+  it("should POST TO / to create a new contact", async () => {
     await createContactService.communicateSync();
 
     expect(nockedRequest.isDone()).toBeTruthy();
   });
 
   it("should return the created contact", async () => {
-    nock("http://localhost:300/api/v1").post("/contact").reply(200);
+    nock("http://localhost:3000/api/v1").post("/contacts").reply(200);
 
     const result = await createContactService.communicateSync();
 

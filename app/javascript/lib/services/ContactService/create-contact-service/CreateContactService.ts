@@ -7,8 +7,8 @@ import { IContractAttributes } from "../../../models/IContractAttributes";
 export class CreateContactService extends BaseService {
   constructor(contactAttributes: IContractAttributes) {
     super();
-    this.baseURL = "http://localhost:3000/api/v1/contacts";
-    this.path = "/";
+    this.baseURL = "http://localhost:3000/api/v1";
+    this.path = "/contacts";
     this.httpMethod = HTTP_METHOD.POST;
     this.body = contactAttributes;
   }
