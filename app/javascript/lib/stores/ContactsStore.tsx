@@ -23,20 +23,12 @@ export class ContactStore {
     return <Component {...props} store={ContactStore.useStore()} />;
   };
 
-  private contactService: ContactService = new ContactService();
-  @observable public contacts: IContact[] = [];
+  private readonly contactService: ContactService;
+  @observable public contacts: IContact[];
 
-  @action
-  public async fetchContacts(): Promise<void> {
-    const contacts = await this.contactService.retrieveContacts();
-    this.contacts = contacts;
-    console.log(this.contacts);
-  }
-
-  public async deleteContacts(contacts: IContact[]): Promise<void> {
-    for (const contact of contacts) {
-      await this.contactService.deleteContact(contact.id);
-    }
+  constructor() {
+    this.contactService = new ContactService();
+    this.contacts = [];
   }
 
   public createContact(
@@ -45,10 +37,22 @@ export class ContactStore {
     return this.contactService.createContact(attributes);
   }
 
+  @action
+  public async retrieveContacts(): Promise<IContact[]> {
+    this.contacts = await this.contactService.retrieveContacts();
+    return this.contacts;
+  }
+
   public updateContact(
     id: string,
     attributes: IContactAttributes
   ): Promise<IContact> {
     return this.contactService.updateContact(id, attributes);
+  }
+
+  public async deleteContacts(contacts: IContact[]): Promise<void> {
+    for (const contact of contacts) {
+      await this.contactService.deleteContact(contact.id);
+    }
   }
 }

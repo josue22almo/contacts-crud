@@ -27,7 +27,7 @@ export class Contacts extends React.Component<IProps> {
   }
 
   public async componentDidMount(): Promise<void> {
-    await this.props.store.fetchContacts();
+    await this.props.store.retrieveContacts();
   }
 
   public render(): JSX.Element {

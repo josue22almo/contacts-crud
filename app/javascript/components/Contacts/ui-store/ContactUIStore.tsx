@@ -127,7 +127,7 @@ export class ContactUIStore {
     }
 
     this.closeModal();
-    await this.contactStore.fetchContacts();
+    await this.contactStore.retrieveContacts();
   }
 
   public openModelToCreateAContact(): void {
@@ -150,7 +150,7 @@ export class ContactUIStore {
 
     await this.contactStore.deleteContacts(selectedContacts);
 
-    return this.contactStore.fetchContacts();
+    return this.contactStore.retrieveContacts();
   }
 
   public openModelToUpdateContact(): void {
@@ -171,7 +171,7 @@ export class ContactUIStore {
   private async handleUpdate() {
     await this.contactStore.updateContact(this.id, this.contactAttributes);
     this.closeModal();
-    await this.contactStore.fetchContacts();
+    await this.contactStore.retrieveContacts();
   }
 
   @action
