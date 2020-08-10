@@ -175,7 +175,7 @@ export class ContactUIStore {
   }
 
   @action
-  private closeModal(): void {
+  public closeModal(): void {
     this.isModalVisible = false;
     this.restore();
   }
