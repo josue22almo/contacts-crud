@@ -1,21 +1,20 @@
 import nock from "nock";
-import { DeleteContactService } from "../../../../../../app/javascript/lib/services/ContactService/delete-contact-service/DeleteContactService";
+import { RetrieveContactsService } from "../../../../../../app/javascript/lib/services/ContactService/retrieve-contacts-service/GetContactsService";
 
 describe("Retrieve contacts service", () => {
-  const contactId = "contact-id";
-  const retrieveContactsService = new DeleteContactService(contactId);
+  const retrieveContactsService = new RetrieveContactsService();
 
   let nockedRequest: nock.Scope;
 
   beforeEach(() => {
     nockedRequest = nock("http://localhost:3000/api/v1")
-    .delete(`/contacts/${contactId}`)
-    .reply(200, {
-      data: []
-    });
-  })
+      .get(`/contacts`)
+      .reply(200, {
+        data: [],
+      });
+  });
 
-  it("should DELETE to /contacts/:id to delete the given contact id", async () => {
+  it("should do a GET to /contacts to fetch the existen contacts", async () => {
     await retrieveContactsService.communicateSync();
 
     expect(nockedRequest.isDone()).toBeTruthy();
@@ -25,5 +24,5 @@ describe("Retrieve contacts service", () => {
     const result = await retrieveContactsService.communicateSync();
 
     expect(result.length).toBeDefined();
-  })
+  });
 });
