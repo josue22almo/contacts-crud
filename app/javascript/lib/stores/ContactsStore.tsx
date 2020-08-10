@@ -1,5 +1,5 @@
 import React from "react";
-import { action, observable } from "mobx";
+import { action } from "mobx";
 import { IContact } from "../models/IContact";
 import { ContactService } from "../services/ContactService/ContactsService";
 import { IContactAttributes } from "../models/IContactAttributes";

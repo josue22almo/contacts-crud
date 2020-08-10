@@ -89,4 +89,28 @@ describe("Contact store tests", () => {
       expect(mockedServiceFunction).toHaveBeenCalled();
     });
   });
+
+  describe(".updateContacts", () => {
+    let mockedServiceFunction: jest.Mock;
+    const contact = {
+      id: "contact-id",
+      attributes: {
+        firstName: "firstName",
+        lastName: "lastName",
+        email: "email",
+        phoneNumber: "phoneNumber",
+      },
+    };
+
+    beforeEach(async () => {
+      mockedServiceFunction = ContactService.prototype.updateContact = jest.fn();
+      await contactStore.updateContact(contact.id, contact.attributes);
+    });
+    it("should delete each given contact using the service", () => {
+      expect(mockedServiceFunction).toHaveBeenCalledWith(
+        contact.id,
+        contact.attributes
+      );
+    });
+  });
 });
