@@ -57,6 +57,8 @@ export class ContactUIStore {
   public contactAttributes: IContactAttributes;
   public id: string;
 
+  @observable public contacts: IContact[];
+
   @observable
   public error = "";
 
@@ -112,12 +114,12 @@ export class ContactUIStore {
 
   public async handleModelSubmit(): Promise<void> {
     if (this.operation === "create") {
-      return this.handleCreation();
+      return this.handleContactCreation();
     }
-    return this.handleUpdate();
+    return this.handleContactUpdate();
   }
 
-  private async handleCreation() {
+  private async handleContactCreation() {
     const result = await this.contactStore.createContact(
       this.contactAttributes
     );
@@ -127,17 +129,13 @@ export class ContactUIStore {
     }
 
     this.closeModal();
-    await this.contactStore.retrieveContacts();
+    await this.updateContacts();
   }
 
-  public openModelToCreateAContact(): void {
-    this.setOperation("create");
-    this.showModal();
-  }
-
-  @action
-  private showModal(): void {
-    this.isModalVisible = true;
+  private async handleContactUpdate() {
+    await this.contactStore.updateContact(this.id, this.contactAttributes);
+    this.closeModal();
+    await this.updateContacts();
   }
 
   public async deleteContacts(): Promise<void> {
@@ -150,7 +148,22 @@ export class ContactUIStore {
 
     await this.contactStore.deleteContacts(selectedContacts);
 
-    return this.contactStore.retrieveContacts();
+    return this.updateContacts();
+  }
+
+  @action
+  public async updateContacts(): Promise<void> {
+    this.contacts = await this.contactStore.retrieveContacts();
+  }
+
+  public openModelToCreateAContact(): void {
+    this.setOperation("create");
+    this.showModal();
+  }
+
+  @action
+  private showModal(): void {
+    this.isModalVisible = true;
   }
 
   public openModelToUpdateContact(): void {
@@ -166,12 +179,6 @@ export class ContactUIStore {
     } else {
       alert("Can not update more than 1 contact. Please chose only one.");
     }
-  }
-
-  private async handleUpdate() {
-    await this.contactStore.updateContact(this.id, this.contactAttributes);
-    this.closeModal();
-    await this.contactStore.retrieveContacts();
   }
 
   @action

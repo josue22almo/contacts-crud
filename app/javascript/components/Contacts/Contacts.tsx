@@ -27,11 +27,10 @@ export class Contacts extends React.Component<IProps> {
   }
 
   public async componentDidMount(): Promise<void> {
-    await this.props.store.retrieveContacts();
+    await this.contactUIStore.updateContacts();
   }
 
   public render(): JSX.Element {
-    const { store } = this.props;
     return (
       <ContactUIStore.StoreProvider store={this.contactUIStore}>
         <div
@@ -48,7 +47,7 @@ export class Contacts extends React.Component<IProps> {
               this.contactUIStore
             )}
             columnDefs={this.contactUIStore.columnDefs}
-            rowData={store.contacts}
+            rowData={this.contactUIStore.contacts}
             rowSelection="multiple"
           />
 

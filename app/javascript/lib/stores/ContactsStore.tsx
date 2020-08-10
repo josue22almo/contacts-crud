@@ -24,11 +24,9 @@ export class ContactStore {
   };
 
   private readonly contactService: ContactService;
-  @observable public contacts: IContact[];
 
   constructor() {
     this.contactService = new ContactService();
-    this.contacts = [];
   }
 
   public createContact(
@@ -39,8 +37,7 @@ export class ContactStore {
 
   @action
   public async retrieveContacts(): Promise<IContact[]> {
-    this.contacts = await this.contactService.retrieveContacts();
-    return this.contacts;
+    return this.contactService.retrieveContacts();
   }
 
   public updateContact(
