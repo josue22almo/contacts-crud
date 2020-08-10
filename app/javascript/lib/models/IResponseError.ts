@@ -1,3 +1,3 @@
-interface IResponseError {
+export interface IResponseError {
   error: string;
 }

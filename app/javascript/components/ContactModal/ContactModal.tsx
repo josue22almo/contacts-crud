@@ -15,6 +15,7 @@ interface IProps {
   isVisible: boolean;
   isSubmitButtonDisable: boolean;
   submitAction: OperationType;
+  error: string;
 }
 
 export class ContactModal extends React.Component<IProps> {

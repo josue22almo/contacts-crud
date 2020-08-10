@@ -4,6 +4,8 @@ import { GridApi, GridReadyEvent } from "ag-grid-community";
 import { IContactAttributes } from "../../../lib/models/IContactAttributes";
 import { OperationType } from "./OperationType";
 import { IContact } from "../../../lib/models/IContact";
+import { ContactStore } from "../../../lib/stores/ContactsStore";
+import { IResponseError } from "../../../lib/models/IResponseError";
 
 export class ContactUIStore {
   private static StoreContext = React.createContext({} as ContactUIStore);
@@ -16,7 +18,7 @@ export class ContactUIStore {
     );
   };
 
-  public gridApi: GridApi;
+  private gridApi: GridApi;
 
   public operation: OperationType;
 
@@ -55,9 +57,12 @@ export class ContactUIStore {
   public contactAttributes: IContactAttributes;
   public id: string;
 
-  constructor() {
+  @observable
+  public error = "";
+
+  constructor(private readonly contactStore: ContactStore) {
     this.isModalVisible = false;
-    this.resetContactAttributes();
+    this.restore();
   }
 
   @action
@@ -76,19 +81,19 @@ export class ContactUIStore {
   }
 
   @action
-  public closeModal(): void {
-    this.isModalVisible = false;
-    this.resetContactAttributes();
-  }
-
-  @action
   public setContact(contact: IContact): void {
     this.id = contact.id;
     this.contactAttributes = contact.attributes;
   }
 
-  private resetContactAttributes() {
+  @action
+  public setError(error: string): void {
+    this.error = error;
+  }
+
+  private restore() {
     this.id = "";
+    this.error = "";
     this.contactAttributes = {
       firstName: "",
       lastName: "",
@@ -97,16 +102,86 @@ export class ContactUIStore {
     };
   }
 
-  @action
-  public showModal(): void {
-    this.isModalVisible = true;
-  }
-
   public setGridAPI(event: GridReadyEvent): void {
     this.gridApi = event.api;
   }
 
   public setOperation(operation: OperationType): void {
     this.operation = operation;
+  }
+
+  public async handleModelSubmit(): Promise<void> {
+    if (this.operation === "create") {
+      return this.handleCreation();
+    }
+    return this.handleUpdate();
+  }
+
+  private async handleCreation() {
+    const result = await this.contactStore.createContact(
+      this.contactAttributes
+    );
+    if ((result as IResponseError).error) {
+      this.setError((result as IResponseError).error);
+      return;
+    }
+
+    this.closeModal();
+    await this.contactStore.fetchContacts();
+  }
+
+  public openModelToCreateAContact(): void {
+    this.setOperation("create");
+    this.showModal();
+  }
+
+  @action
+  private showModal(): void {
+    this.isModalVisible = true;
+  }
+
+  public async deleteContacts(): Promise<void> {
+    const selectedContacts = this.getSelectedContacts();
+
+    if (selectedContacts.length === 0) {
+      alert("Select at least one contact to delete");
+      return;
+    }
+
+    await this.contactStore.deleteContacts(selectedContacts);
+
+    return this.contactStore.fetchContacts();
+  }
+
+  public openModelToUpdateContact(): void {
+    const selectedContacts = this.getSelectedContacts();
+
+    if (selectedContacts.length === 0) {
+      alert("Chose a contact to update");
+    } else if (selectedContacts.length === 1) {
+      const selectedContact: IContact = selectedContacts[0];
+      this.setOperation("update");
+      this.setContact({ ...selectedContact });
+      this.showModal();
+    } else {
+      alert("Can not update more than 1 contact. Please chose only one.");
+    }
+  }
+
+  private async handleUpdate() {
+    await this.contactStore.updateContact(this.id, this.contactAttributes);
+    this.closeModal();
+    await this.contactStore.fetchContacts();
+  }
+
+  @action
+  private closeModal(): void {
+    this.isModalVisible = false;
+    this.restore();
+  }
+
+  private getSelectedContacts(): IContact[] {
+    const selectedNodes = this.gridApi.getSelectedNodes();
+    return selectedNodes.map((node) => node.data);
   }
 }

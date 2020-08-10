@@ -2,14 +2,13 @@
 import React, { ChangeEvent } from "react";
 import { observer } from "mobx-react";
 
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
 
 import { Button } from "@material-ui/core";
 
 import { ContactStore } from "../../lib/stores/ContactsStore";
-import { IContact } from "../../lib/models/IContact";
 import { ContactModal } from "../ContactModal/ContactModal";
 import { ContactUIStore } from "./ui-store/ContactUIStore";
 
@@ -24,7 +23,7 @@ export class Contacts extends React.Component<IProps> {
 
   constructor(props: IProps) {
     super(props);
-    this.contactUIStore = new ContactUIStore();
+    this.contactUIStore = new ContactUIStore(props.store);
   }
 
   public async componentDidMount(): Promise<void> {
@@ -38,37 +37,58 @@ export class Contacts extends React.Component<IProps> {
         <div
           className="ag-theme-alpine-dark"
           style={{
-            height: '550px',
-            width: '5500px'
+            height: "550px",
+            width: "5500px",
           }}
         >
           {this.renderButtons()}
 
           <AgGridReact
-            onGridReady={this.contactUIStore.setGridAPI.bind(this.contactUIStore)}
+            onGridReady={this.contactUIStore.setGridAPI.bind(
+              this.contactUIStore
+            )}
             columnDefs={this.contactUIStore.columnDefs}
             rowData={store.contacts}
-            rowSelection="multiple" />
+            rowSelection="multiple"
+          />
 
           <ContactModal
             isVisible={this.contactUIStore.isModalVisible}
-            onSubmit={this.handleModelSubmit.bind(this)}
+            error={this.contactUIStore.error}
+            onSubmit={this.contactUIStore.handleModelSubmit.bind(
+              this.contactUIStore
+            )}
             submitAction={this.contactUIStore.operation}
             isSubmitButtonDisable={this.contactUIStore.isSubmitButtonDisable}
             contactAttributes={this.contactUIStore.contactAttributes}
             onFirstNameFieldChange={(event: ChangeEvent) => {
-              this.contactUIStore.setAttribute("firstName", (event.target as any).value)
+              this.contactUIStore.setAttribute(
+                "firstName",
+                (event.target as any).value
+              );
             }}
             onLastNameFieldChange={(event: ChangeEvent) =>
-              this.contactUIStore.setAttribute("lastName", (event.target as any).value)
+              this.contactUIStore.setAttribute(
+                "lastName",
+                (event.target as any).value
+              )
             }
             onEmailNameFieldChange={(event: ChangeEvent) =>
-              this.contactUIStore.setAttribute("email", (event.target as any).value)
+              this.contactUIStore.setAttribute(
+                "email",
+                (event.target as any).value
+              )
             }
             onPhoneNumberFieldChange={(event: ChangeEvent) =>
-              this.contactUIStore.setAttribute("phoneNumber", (event.target as any).value)
+              this.contactUIStore.setAttribute(
+                "phoneNumber",
+                (event.target as any).value
+              )
             }
-            handleClose={this.contactUIStore.closeModal.bind(this.contactUIStore)} />
+            handleClose={this.contactUIStore.closeModal.bind(
+              this.contactUIStore
+            )}
+          />
         </div>
       </ContactUIStore.StoreProvider>
     );
@@ -79,73 +99,32 @@ export class Contacts extends React.Component<IProps> {
       <div>
         <Button
           variant="contained"
-          onClick={this.openModelToCreateAContact.bind(this)}
-          color="primary">
+          onClick={this.contactUIStore.openModelToCreateAContact.bind(
+            this.contactUIStore
+          )}
+          color="primary"
+        >
           Create new contact
         </Button>
 
         <Button
           variant="contained"
-          onClick={this.deleteContacts.bind(this)}
-          color="secondary">
+          onClick={this.contactUIStore.deleteContacts.bind(this.contactUIStore)}
+          color="secondary"
+        >
           Delete selected contacts
         </Button>
 
         <Button
           variant="contained"
-          onClick={this.openModelToUpdateContact.bind(this)}
-          color="default">
+          onClick={this.contactUIStore.openModelToUpdateContact.bind(
+            this.contactUIStore
+          )}
+          color="default"
+        >
           Update contact
         </Button>
       </div>
-    )
-  }
-
-  private async handleModelSubmit() {
-    const { store } = this.props;
-    if (this.contactUIStore.operation === "create") {
-      await store.createContact(this.contactUIStore.contactAttributes)
-    } else {
-      await store.updateContact(this.contactUIStore.id, this.contactUIStore.contactAttributes)
-    }
-    this.contactUIStore.closeModal();
-    await store.fetchContacts();
-  }
-
-  private openModelToCreateAContact() {
-    this.contactUIStore.setOperation("create");
-    this.contactUIStore.showModal();
-  }
-
-  private openModelToUpdateContact() {
-    const selectedContacts = this.getSelectedContacts();
-
-    if (selectedContacts.length === 0) {
-      alert("Chose a contact to update");
-    } else if (selectedContacts.length === 1) {
-      const selectedContact: IContact = selectedContacts[0];
-      this.contactUIStore.setOperation("update");
-      this.contactUIStore.setContact({ ...selectedContact });
-      this.contactUIStore.showModal();
-    } else {
-      alert("Can not update more than 1 contact. Please chose only one.");
-    }
-
-
-  }
-
-  private async deleteContacts() {
-    const { store } = this.props;
-
-    const selectedContacts = this.getSelectedContacts();
-
-    await store.deleteContacts(selectedContacts);
-
-    return store.fetchContacts();
-  }
-
-  private getSelectedContacts(): IContact[] {
-    const selectedNodes = this.contactUIStore.gridApi.getSelectedNodes()
-    return selectedNodes.map(node => node.data);
+    );
   }
 }

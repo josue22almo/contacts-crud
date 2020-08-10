@@ -3,6 +3,7 @@ import { action, observable } from "mobx";
 import { IContact } from "../models/IContact";
 import { ContactService } from "../services/ContactService/ContactsService";
 import { IContactAttributes } from "../models/IContactAttributes";
+import { IResponseError } from "../models/IResponseError";
 
 export class ContactStore {
   private static StoreContext = React.createContext({} as ContactStore);
@@ -38,7 +39,9 @@ export class ContactStore {
     }
   }
 
-  public createContact(attributes: IContactAttributes): Promise<IContact> {
+  public createContact(
+    attributes: IContactAttributes
+  ): Promise<IContact | IResponseError> {
     return this.contactService.createContact(attributes);
   }
 

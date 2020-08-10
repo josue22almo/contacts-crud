@@ -18,6 +18,7 @@ interface IProps {
   onPhoneNumberFieldChange: (event: ChangeEvent) => void;
   isSubmitButtonDisable: boolean;
   submitAction: OperationType;
+  error: string;
 }
 
 export const ContactForm = observer(
@@ -92,6 +93,7 @@ export const ContactForm = observer(
             Cancel
           </Button>
         </div>
+        <text style={{ color: "red" }}>{props.error}</text>
       </form>
     );
   }
