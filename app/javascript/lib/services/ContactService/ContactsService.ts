@@ -1,5 +1,5 @@
 import { IContact } from "../../models/IContact";
-import { IContractAttributes } from "../../models/IContractAttributes";
+import { IContactAttributes } from "../../models/IContactAttributes";
 import { RetrieveContactsService } from "./retrieve-contacts-service/GetContactsService";
 import { CreateContactService } from "./create-contact-service/CreateContactService";
 import { UpdateContactService } from "./update-contact-service/UpdateContactService";
@@ -10,11 +10,16 @@ export class ContactService {
     return new RetrieveContactsService().communicateSync();
   }
 
-  public async createContact(contactAttributes: IContractAttributes): Promise<IContact> {
+  public async createContact(
+    contactAttributes: IContactAttributes
+  ): Promise<IContact> {
     return new CreateContactService(contactAttributes).communicateSync();
   }
 
-  public async updateContact(id: string, contactAttributes: IContractAttributes): Promise<IContact> {
+  public async updateContact(
+    id: string,
+    contactAttributes: IContactAttributes
+  ): Promise<IContact> {
     return new UpdateContactService(id, contactAttributes).communicateSync();
   }
 
@@ -22,4 +27,3 @@ export class ContactService {
     return new DeleteContactService(id).communicateSync();
   }
 }
-

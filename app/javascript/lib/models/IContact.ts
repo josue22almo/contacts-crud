@@ -1,6 +1,6 @@
-import { IContractAttributes } from "./IContractAttributes";
+import { IContactAttributes } from "./IContactAttributes";
 
 export interface IContact {
   id: string;
-  attributes: IContractAttributes;
+  attributes: IContactAttributes;
 }

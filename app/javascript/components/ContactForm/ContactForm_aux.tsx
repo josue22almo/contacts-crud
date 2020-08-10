@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { ChangeEvent } from "react";
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
-import { IContractAttributes } from "../../lib/models/IContractAttributes";
+import { IContactAttributes } from "../../lib/models/IContactAttributes";
 import { OperationType } from "../Contacts/ui-store/OperationType";
 
 interface IProps {
-  contactAttributes: IContractAttributes;
+  contactAttributes: IContactAttributes;
   onSubmit: () => Promise<void>;
   onCancel: () => void;
   onFirstNameFieldChange: (event: ChangeEvent) => void;
@@ -22,71 +22,70 @@ interface IProps {
 export const ContactForm = (props: IProps): JSX.Element => {
   const useStyles = makeStyles((theme) => ({
     root: {
-      '& .MuiTextField-root': {
+      "& .MuiTextField-root": {
         margin: theme.spacing(1),
-        width: '25ch',
+        width: "25ch",
       },
     },
   }));
 
   let submitText = "Create contact";
 
-  if(props.submitAction === "update") {
-    submitText = "Update contact"
+  if (props.submitAction === "update") {
+    submitText = "Update contact";
   }
-  
+
   const classes = useStyles();
 
   return (
-    <form 
-      className={classes.root}
-      noValidate 
-      autoComplete="off">
+    <form className={classes.root} noValidate autoComplete="off">
       <div>
-        <TextField 
+        <TextField
           id="standard-required"
           error={props.contactAttributes.firstName === ""}
           required
           label="First name"
           value={props.contactAttributes.firstName}
-          onChange={props.onFirstNameFieldChange} />
-        <TextField 
+          onChange={props.onFirstNameFieldChange}
+        />
+        <TextField
           id="standard-required"
           required
           error={props.contactAttributes.lastName === ""}
           label="Last name"
           value={props.contactAttributes.lastName}
-          onChange={props.onLastNameFieldChange} />
-        <TextField 
+          onChange={props.onLastNameFieldChange}
+        />
+        <TextField
           id="standard-required"
           required
-          label="email" 
+          label="email"
           error={props.contactAttributes.email === ""}
           value={props.contactAttributes.email}
-          onChange={props.onEmailNameFieldChange} />
-        <TextField 
+          onChange={props.onEmailNameFieldChange}
+        />
+        <TextField
           id="standard-required"
           required
           label="Phone number"
           error={props.contactAttributes.phoneNumber === ""}
           value={props.contactAttributes.phoneNumber}
-          onChange={props.onPhoneNumberFieldChange} />
+          onChange={props.onPhoneNumberFieldChange}
+        />
       </div>
       <div>
-        <Button 
-          variant="contained" 
+        <Button
+          variant="contained"
           onClick={props.onSubmit}
           disabled={props.isSubmitButtonDisable}
-          color="primary">
+          color="primary"
+        >
           {submitText}
         </Button>
-        <Button 
-          variant="contained" 
-          onClick={props.onCancel}
-          color="secondary">
+        <Button variant="contained" onClick={props.onCancel} color="secondary">
           Cancel
         </Button>
       </div>
     </form>
   );
-}
+};
