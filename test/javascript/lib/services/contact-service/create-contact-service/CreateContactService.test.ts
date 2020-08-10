@@ -16,7 +16,10 @@ describe("Create contact service", () => {
     nockedRequest = nock("http://localhost:3000/api/v1")
     .post("/contacts")
     .reply(200, {
-      data: "response"
+      data: {
+        id: "created-contact-id",
+        attributes: contactAttributes
+      }
     });
   })
 
