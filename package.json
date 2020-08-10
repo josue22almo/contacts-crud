@@ -2,7 +2,8 @@
   "name": "contacts",
   "version": "0.1.0",
   "scripts": {
-    "build:only": "rm -rf dist && tsc -p tsconfig.json --pretty"
+    "build:only": "rm -rf dist && tsc -p tsconfig.json --pretty",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/preset-react": "^7.10.4",
