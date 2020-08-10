@@ -1,4 +1,3 @@
-import React from "react";
 import { action } from "mobx";
 import { IContact } from "../models/IContact";
 import { ContactService } from "../services/ContactService/ContactsService";
@@ -6,23 +5,6 @@ import { IContactAttributes } from "../models/IContactAttributes";
 import { IResponseError } from "../models/IResponseError";
 
 export class ContactStore {
-  private static StoreContext = React.createContext({} as ContactStore);
-
-  public static StoreProvider = ({ children, store }): JSX.Element => {
-    return (
-      <ContactStore.StoreContext.Provider value={store}>
-        {children}
-      </ContactStore.StoreContext.Provider>
-    );
-  };
-
-  public static useStore = (): ContactStore =>
-    React.useContext(ContactStore.StoreContext);
-
-  public static withStore = (Component) => (props) => {
-    return <Component {...props} store={ContactStore.useStore()} />;
-  };
-
   private readonly contactService: ContactService;
 
   constructor() {

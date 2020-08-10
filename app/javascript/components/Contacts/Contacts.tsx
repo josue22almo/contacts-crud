@@ -12,18 +12,16 @@ import { ContactStore } from "../../lib/stores/ContactsStore";
 import { ContactModal } from "../ContactModal/ContactModal";
 import { ContactUIStore } from "./ui-store/ContactUIStore";
 
-interface IProps {
-  store: ContactStore;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IProps {}
 
-@(ContactStore.withStore as any)
 @observer
 export class Contacts extends React.Component<IProps> {
   private contactUIStore: ContactUIStore;
 
   constructor(props: IProps) {
     super(props);
-    this.contactUIStore = new ContactUIStore(props.store);
+    this.contactUIStore = new ContactUIStore(new ContactStore());
   }
 
   public async componentDidMount(): Promise<void> {
