@@ -30,17 +30,15 @@ export abstract class BaseService<T = any> {
 
   protected async executeRequest<T>(): Promise<IRequestResponse<T>> {
     try {
-      return await this.requester.sync(
-        {
-          baseURL: this.baseURL + this.path,
-          method: this.httpMethod,
-          data: this.body,
-          headers: this.headers,
-          params: this.qs,
-        }
-      );
+      return await this.requester.sync({
+        baseURL: this.baseURL + this.path,
+        method: this.httpMethod,
+        data: this.body,
+        headers: this.headers,
+        params: this.qs,
+      });
     } catch (error) {
-      return error;
+      return error.response;
     }
   }
 }
