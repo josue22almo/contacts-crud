@@ -29,9 +29,7 @@
     "react_ujs": "^2.6.1",
     "ts-loader": "^8.0.2",
     "turbolinks": "^5.2.0",
-    "typescript": "^3.9.7"
-  },
-  "devDependencies": {
+    "typescript": "^3.9.7",
     "@babel/plugin-proposal-decorators": "^7.10.5",
     "@babel/preset-typescript": "^7.10.4",
     "@types/axios": "^0.14.0",
