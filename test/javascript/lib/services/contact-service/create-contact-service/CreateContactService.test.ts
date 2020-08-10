@@ -11,7 +11,7 @@ describe("Create contact service", () => {
   const createContactService = new CreateContactService(contactAttributes);
 
   let nockedRequest: nock.Scope;
--
+
   beforeEach(() => {
     nockedRequest = nock("http://localhost:3000/api/v1")
     .post("/contacts")
@@ -23,7 +23,7 @@ describe("Create contact service", () => {
     });
   })
 
-  it("should POST TO / to create a new contact", async () => {
+  it("should POST TO /contacts to create a new contact", async () => {
     await createContactService.communicateSync();
 
     expect(nockedRequest.isDone()).toBeTruthy();

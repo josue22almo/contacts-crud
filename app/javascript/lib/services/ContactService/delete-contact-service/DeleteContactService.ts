@@ -5,8 +5,8 @@ import { HTTP_METHOD } from "../../requester/HTTP_METHOD";
 export class DeleteContactService extends BaseService {
   constructor(id: string) {
     super();
-    this.baseURL = "http://localhost:3000/api/v1/contacts";
-    this.path = `/${id}`;
+    this.baseURL = "http://localhost:3000/api/v1";
+    this.path = `/contacts/${id}`;
     this.httpMethod = HTTP_METHOD.DELETE;
   }
 

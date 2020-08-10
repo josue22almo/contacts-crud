@@ -7,8 +7,8 @@ import { MailExistsResponseHandler } from "../../response-handlers/MailExistsRes
 export class UpdateContactService extends BaseService {
   constructor(id: string, contactAttributes: Partial<IContractAttributes>) {
     super();
-    this.baseURL = "http://localhost:3000/api/v1/contacts";
-    this.path = `/${id}`;
+    this.baseURL = "http://localhost:3000/api/v1";
+    this.path = `/contacts/${id}`;
     this.httpMethod = HTTP_METHOD.PATCH;
     this.body = contactAttributes;
   }
