@@ -1,13 +1,13 @@
-import { BaseService } from "../../BaseService/BaseService";
+import { BaseService } from "../../base-service/BaseService";
 import { SucceedResponseHandler } from "../../response-handlers/SucceedResponseHandler/SucceedResponseHandler";
 import { HTTP_METHOD } from "../../requester/HTTP_METHOD";
 
-export class RetrieveContactsService extends BaseService {
-  constructor() {
+export class DeleteContactService extends BaseService {
+  constructor(id: string) {
     super();
     this.baseURL = "http://localhost:3000/api/v1";
-    this.path = "/contacts";
-    this.httpMethod = HTTP_METHOD.GET;
+    this.path = `/contacts/${id}`;
+    this.httpMethod = HTTP_METHOD.DELETE;
   }
 
   protected declareResponseHandler(): void {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { ResponseHandler } from "./ResponseHandler/ResponseHandler";
+import { ResponseHandler } from "./response-handler/ResponseHandler";
 import { Requester } from "../requester/Requester";
 import { HTTP_METHOD } from "../requester/HTTP_METHOD";
 import { IRequestResponse } from "../requester/IRequestResponse";

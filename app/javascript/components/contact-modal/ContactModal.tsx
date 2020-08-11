@@ -1,8 +1,8 @@
 import React, { ChangeEvent } from "react";
-import { ContactForm } from "../ContactForm/ContactForm";
-import { BaseModal } from "../BaseModal/BaseModal";
+import { ContactForm } from "../contact-form/ContactForm";
+import { BaseModal } from "../base-modal/BaseModal";
 import { IContactAttributes } from "../../lib/models/IContactAttributes";
-import { OperationType } from "../Contacts/ui-store/OperationType";
+import { OperationType } from "../contacts-list/ui-store/OperationType";
 
 interface IProps {
   contactAttributes: IContactAttributes;

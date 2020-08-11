@@ -1,6 +1,6 @@
 import { action } from "mobx";
 import { IContact } from "../models/IContact";
-import { ContactService } from "../services/ContactService/ContactsService";
+import { ContactService } from "../services/contact-service/ContactsService";
 import { IContactAttributes } from "../models/IContactAttributes";
 import { IResponseError } from "../models/IResponseError";
 

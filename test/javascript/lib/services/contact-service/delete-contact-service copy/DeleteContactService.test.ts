@@ -6,8 +6,7 @@ describe("Delete contact service", () => {
   const deleteContactService = new DeleteContactService(contactId);
 
   let nockedRequest: nock.Scope;
-
-  beforeEach(() => {
+  -beforeEach(() => {
     nockedRequest = nock("http://localhost:3000/api/v1")
       .delete(`/contacts/${contactId}`)
       .reply(201);

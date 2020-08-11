@@ -1,5 +1,5 @@
 import nock from "nock";
-import { CreateContactService } from "../../../../../../app/javascript/lib/services/ContactService/create-contact-service/CreateContactService";
+import { CreateContactService } from "../../../../../../app/javascript/lib/services/contact-service/create-contact-service/CreateContactService";
 import { IContact } from "../../../../../../app/javascript/lib/models/IContact";
 
 describe("Create contact service", () => {

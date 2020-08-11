@@ -9,7 +9,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
 import { Button } from "@material-ui/core";
 
 import { ContactStore } from "../../lib/stores/ContactsStore";
-import { ContactModal } from "../ContactModal/ContactModal";
+import { ContactModal } from "../contact-modal/ContactModal";
 import { ContactUIStore } from "./ui-store/ContactUIStore";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

@@ -1,5 +1,5 @@
 import nock from "nock";
-import { UpdateContactService } from "../../../../../../app/javascript/lib/services/ContactService/update-contact-service/UpdateContactService";
+import { UpdateContactService } from "../../../../../../app/javascript/lib/services/contact-service/update-contact-service/UpdateContactService";
 
 describe("Update contact service", () => {
   const contactAttributes = {

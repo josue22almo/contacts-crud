@@ -1,5 +1,5 @@
 import nock from "nock";
-import { RetrieveContactsService } from "../../../../../../app/javascript/lib/services/ContactService/retrieve-contacts-service/GetContactsService";
+import { RetrieveContactsService } from "../../../../../../app/javascript/lib/services/contact-service/retrieve-contacts-service/GetContactsService";
 
 describe("Retrieve contacts service", () => {
   const retrieveContactsService = new RetrieveContactsService();

@@ -1,7 +1,7 @@
 import { ContactStore } from "../../../../../app/javascript/lib/stores/ContactsStore";
 import { IContact } from "../../../../../app/javascript/lib/models/IContact";
 import { IResponseError } from "../../../../../app/javascript/lib/models/IResponseError";
-import { ContactService } from "../../../../../app/javascript/lib/services/ContactService/ContactsService";
+import { ContactService } from "../../../../../app/javascript/lib/services/contact-service/ContactsService";
 
 describe("Contact store tests", () => {
   const contactStore = new ContactStore();

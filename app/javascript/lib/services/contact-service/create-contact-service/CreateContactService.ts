@@ -1,4 +1,4 @@
-import { BaseService } from "../../BaseService/BaseService";
+import { BaseService } from "../../base-service/BaseService";
 import { SucceedResponseHandler } from "../../response-handlers/SucceedResponseHandler/SucceedResponseHandler";
 import { HTTP_METHOD } from "../../requester/HTTP_METHOD";
 import { MailExistsResponseHandler } from "../../response-handlers/MailExistsResponseHandler/MailExistsResponseHandler";

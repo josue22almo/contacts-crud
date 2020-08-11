@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import { IContactAttributes } from "../../lib/models/IContactAttributes";
-import { OperationType } from "../Contacts/ui-store/OperationType";
+import { OperationType } from "../contacts-list/ui-store/OperationType";
 import { observer } from "mobx-react";
 
 interface IProps {
