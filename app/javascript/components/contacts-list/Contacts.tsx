@@ -2,15 +2,12 @@
 import React, { ChangeEvent } from "react";
 import { observer } from "mobx-react";
 
-import { AgGridReact } from "ag-grid-react";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
-
 import { Button } from "@material-ui/core";
 
 import { ContactStore } from "../../lib/stores/ContactsStore";
 import { ContactModal } from "../contact-modal/ContactModal";
 import { ContactUIStore } from "./ui-store/ContactUIStore";
+import { ContactsGrid } from "../contacts-grid/ContactsGrid";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IProps {}
@@ -40,13 +37,12 @@ export class Contacts extends React.Component<IProps> {
         >
           {this.renderButtons()}
 
-          <AgGridReact
+          <ContactsGrid
             onGridReady={this.contactUIStore.setGridAPI.bind(
               this.contactUIStore
             )}
             columnDefs={this.contactUIStore.columnDefs}
-            rowData={this.contactUIStore.contacts}
-            rowSelection="multiple"
+            contacts={this.contactUIStore.contacts}
           />
 
           <ContactModal
