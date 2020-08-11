@@ -1,7 +1,6 @@
 module Api
   module V1
     class ContactsController < ApplicationController
-      protect_from_forgery with: :null_session
         
       def index
         if request.query_parameters
