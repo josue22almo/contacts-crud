@@ -1,6 +1,6 @@
 import React from "react";
 import { observable, action, computed } from "mobx";
-import { GridApi, GridReadyEvent } from "ag-grid-community";
+import { GridApi, GridReadyEvent, ColDef } from "ag-grid-community";
 import { IContactAttributes } from "../../../lib/models/IContactAttributes";
 import { OperationType } from "./OperationType";
 import { IContact } from "../../../lib/models/IContact";
@@ -22,7 +22,7 @@ export class ContactUIStore {
 
   public operation: OperationType;
 
-  public readonly columnDefs = [
+  public readonly columnDefs: ColDef[] = [
     {
       headerName: "Firs name",
       field: "attributes.firstName",
