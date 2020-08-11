@@ -4,6 +4,7 @@ import { RetrieveContactsService } from "./retrieve-contacts-service/GetContacts
 import { CreateContactService } from "./create-contact-service/CreateContactService";
 import { UpdateContactService } from "./update-contact-service/UpdateContactService";
 import { DeleteContactService } from "./delete-contact-service/DeleteContactService";
+import { IResponseError } from "../../models/IResponseError";
 
 export class ContactService {
   public async retrieveContacts(): Promise<IContact[]> {
@@ -12,7 +13,7 @@ export class ContactService {
 
   public async createContact(
     contactAttributes: IContactAttributes
-  ): Promise<IContact> {
+  ): Promise<IContact | IResponseError> {
     return new CreateContactService(contactAttributes).communicateSync();
   }
 
