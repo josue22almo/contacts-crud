@@ -12,7 +12,7 @@ import { ContatsGridActionButtons } from "../contacts-grid-action-buttons/Contac
 interface IProps {}
 
 @observer
-export class Contacts extends React.Component<IProps> {
+export class ContactsList extends React.Component<IProps> {
   private contactUIStore: ContactUIStore;
 
   constructor(props: IProps) {
