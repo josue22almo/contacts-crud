@@ -1,24 +1,16 @@
-# README
+# CONTACTS CRUD
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project resolves the following statement:
 
-Things you may want to cover:
+```
+We want a React + Backend application that allows you to create, read, update and delete a list of contacts. 
+Each contact will have: First name, Last name, Email, and phone number.
+All the fields are mandatory and there can’t be two contacts with the same email. 
+The contacts will be persisted in the database.
+```
 
-* Ruby version
+## Tecnologies
 
-* System dependencies
+As the statement says, the frontend must be donde with React JS. From the other hand, the backend is implemented using Ruby on Rails.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+:::image type="content" source="documentation/images/tecnology.png" alt-text="Tecnology":::
