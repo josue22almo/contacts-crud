@@ -16,7 +16,6 @@ interface IProps {
 
 export const ContactsGrid = observer(
   (props: IProps): JSX.Element => {
-    // public render(): JSX.Element {
     return (
       <AgGridReact
         onGridReady={props.onGridReady}
@@ -25,6 +24,5 @@ export const ContactsGrid = observer(
         rowSelection="multiple"
       />
     );
-    // }
   }
 );

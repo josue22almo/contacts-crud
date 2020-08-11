@@ -2,12 +2,11 @@
 import React, { ChangeEvent } from "react";
 import { observer } from "mobx-react";
 
-import { Button } from "@material-ui/core";
-
 import { ContactStore } from "../../lib/stores/ContactsStore";
 import { ContactModal } from "../contact-modal/ContactModal";
 import { ContactUIStore } from "./ui-store/ContactUIStore";
 import { ContactsGrid } from "../contacts-grid/ContactsGrid";
+import { ContatsGridActionButtons } from "../contacts-grid-action-buttons/ContactsGridActionButtons";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IProps {}
@@ -35,7 +34,17 @@ export class Contacts extends React.Component<IProps> {
             width: "5500px",
           }}
         >
-          {this.renderButtons()}
+          <ContatsGridActionButtons
+            onCreatePress={this.contactUIStore.openModelToCreateAContact.bind(
+              this.contactUIStore
+            )}
+            onDeletePress={this.contactUIStore.deleteContacts.bind(
+              this.contactUIStore
+            )}
+            onUpdatePress={this.contactUIStore.openModelToUpdateContact.bind(
+              this.contactUIStore
+            )}
+          />
 
           <ContactsGrid
             onGridReady={this.contactUIStore.setGridAPI.bind(
@@ -84,40 +93,6 @@ export class Contacts extends React.Component<IProps> {
           />
         </div>
       </ContactUIStore.StoreProvider>
-    );
-  }
-
-  private renderButtons() {
-    return (
-      <div>
-        <Button
-          variant="contained"
-          onClick={this.contactUIStore.openModelToCreateAContact.bind(
-            this.contactUIStore
-          )}
-          color="primary"
-        >
-          Create new contact
-        </Button>
-
-        <Button
-          variant="contained"
-          onClick={this.contactUIStore.deleteContacts.bind(this.contactUIStore)}
-          color="secondary"
-        >
-          Delete selected contacts
-        </Button>
-
-        <Button
-          variant="contained"
-          onClick={this.contactUIStore.openModelToUpdateContact.bind(
-            this.contactUIStore
-          )}
-          color="default"
-        >
-          Update contact
-        </Button>
-      </div>
     );
   }
 }
